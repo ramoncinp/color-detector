@@ -64,6 +64,15 @@ fun MainContent(
                         .padding(24.dp)
                 )
             }
+
+            if (state.colorName != null) {
+                ColorNameContainer(
+                    name = state.colorName,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(24.dp)
+                )
+            }
         }
     }
 }
