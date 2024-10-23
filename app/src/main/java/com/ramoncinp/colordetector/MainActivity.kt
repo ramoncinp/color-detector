@@ -7,34 +7,20 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramoncinp.colordetector.ui.components.CameraPermissionTextProvider
-import com.ramoncinp.colordetector.ui.components.CameraPreview
+import com.ramoncinp.colordetector.ui.components.MainContent
 import com.ramoncinp.colordetector.ui.components.PermissionDialog
-import com.ramoncinp.colordetector.ui.components.TapEffect
 import com.ramoncinp.colordetector.ui.theme.ColorDetectorTheme
 import com.ramoncinp.colordetector.viewmodel.MainViewModel
 
@@ -46,7 +32,7 @@ class MainActivity : ComponentActivity() {
             ColorDetectorTheme {
                 val viewModel = viewModel<MainViewModel>()
                 val dialogQueue = viewModel.visiblePermissionDialogQueue
-                var tapPosition by remember { mutableStateOf<Offset?>(null) }
+                val state = viewModel.state.collectAsState()
 
                 val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.RequestPermission(),
@@ -58,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     }
                 )
 
-                LaunchedEffect(key1 = dialogQueue) {
+                LaunchedEffect(dialogQueue) {
                     cameraPermissionResultLauncher.launch(
                         Manifest.permission.CAMERA
                     )
@@ -84,36 +70,11 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                Surface {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            if (hasRequiredPermissions()) {
-                                CameraPreview(
-                                    onColorDetected = { color ->
-                                        Log.d("Analyzer", "Color detected $color")
-                                    },
-                                    onTap = { x, y ->
-                                        tapPosition = Offset(x, y)
-                                    },
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                            } else {
-                                Text(
-                                    text = "Permission not granted"
-                                )
-                            }
-                        }
-
-                        TapEffect(
-                            position = tapPosition,
-                            onAnimationEnd = { tapPosition = null }
-                        )
-                    }
-                }
+                MainContent(
+                    state = state.value,
+                    hasRequiredPermissions = hasRequiredPermissions(),
+                    onColorDetected = { viewModel.categorizeColor(it) }
+                )
             }
         }
     }

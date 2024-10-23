@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import com.ramoncinp.colordetector.domain.ColorData
 import com.ramoncinp.colordetector.ui.ColorImageAnalyzer
 import com.ramoncinp.colordetector.ui.TapHandler
 import kotlin.math.max
@@ -29,7 +30,7 @@ import kotlin.math.min
 fun CameraPreview(
     modifier: Modifier = Modifier,
     onTap: (Float, Float) -> Unit,
-    onColorDetected: (Int) -> Unit
+    onColorDetected: (ColorData) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -39,7 +40,12 @@ fun CameraPreview(
     var cameraControl by remember { mutableStateOf<CameraControl?>(null) }
     var zoomRatio by remember { mutableFloatStateOf(1f) }
     var maxZoomRatio by remember { mutableFloatStateOf(1f) }
-    val tapHandler = remember { TapHandler { x, y -> onTap(x, y) } }
+    val tapHandler = remember {
+        TapHandler { x, y ->
+            onTap(x, y)
+            analyzer.onCoordinatesChange(x, y)
+        }
+    }
 
     val scaleGestureDetector =
         ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
