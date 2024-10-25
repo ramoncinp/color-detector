@@ -12,10 +12,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ramoncinp.colordetector.ui.components.CameraPermissionTextProvider
@@ -100,10 +98,4 @@ fun Activity.openAppSettings() {
         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
         Uri.fromParts("package", packageName, null)
     ).also(::startActivity)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ColorDetectorTheme {}
 }
