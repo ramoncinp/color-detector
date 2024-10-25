@@ -39,8 +39,8 @@ class MainViewModel(
         }
     }
 
-    fun categorizeColor(colorData: ColorData) {
-        val colorName = colorAnalyzer.categorize(colorData)
+    fun nameColor(colorData: ColorData) {
+        val colorName = colorAnalyzer.nameColor(colorData)
         _state.update {
             it.copy(
                 colorHex = colorData.toHex(),

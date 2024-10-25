@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                 MainContent(
                     state = state.value,
                     hasRequiredPermissions = hasRequiredPermissions(),
-                    onColorDetected = { viewModel.categorizeColor(it) }
+                    onColorDetected = { viewModel.nameColor(it) }
                 )
             }
         }

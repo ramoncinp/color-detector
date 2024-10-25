@@ -6,7 +6,7 @@ import kotlin.math.sqrt
 
 class ColorAnalyzerImpl : ColorAnalyzer {
 
-    override fun categorize(data: ColorData): String {
+    override fun nameColor(data: ColorData): String {
         var closestColorName = "Desconocido"
         var smallestDistance = Double.MAX_VALUE
 
@@ -31,18 +31,6 @@ class ColorAnalyzerImpl : ColorAnalyzer {
     }
 
     companion object {
-        private val colorTable = mapOf(
-            0xFF0000 to "Rojo",      // Red
-            0x00FF00 to "Verde",     // Green
-            0x0000FF to "Azul",      // Blue
-            0xFFFF00 to "Amarillo",  // Yellow
-            0xFF00FF to "Magenta",   // Magenta
-            0x00FFFF to "Cian",      // Cyan
-            0x800080 to "Púrpura",   // Purple
-            0xFFFFFF to "Blanco",    // White
-            0x000000 to "Negro"      // Black
-        )
-
         private val materialTable = mapOf(
             0xFF0000 to "Rojo",
             0xFFEBEE to "Rojo",

@@ -46,7 +46,7 @@ fun MainContent(
                     )
                 } else {
                     Text(
-                        text = "Permission not granted"
+                        text = "Permiso no concedido"
                     )
                 }
             }

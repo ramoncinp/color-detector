@@ -25,7 +25,7 @@ fun PermissionDialog(
         confirmButton = {
             Text(
                 text = if (isPermanentlyDeclined) {
-                    "Grant permission"
+                    "Conceder permiso"
                 } else {
                     "Ok"
                 },
@@ -59,9 +59,9 @@ interface PermissionTextProvider {
 class CameraPermissionTextProvider: PermissionTextProvider {
     override fun getDescription(isPermanentlyDeclined: Boolean): String {
         return if (isPermanentlyDeclined) {
-            "It seems you permanently declined camera permission. You can go to the app settings to grant it."
+            "Parece que rechazaste permanentemente el permiso de la cámara. Puedes ir a la configuración de la aplicación para otorgarlo."
         } else {
-            "This app needs access to your camera in order to detect colors"
+            "Esta aplicación necesita acceso a tu cámara para poder detectar colores"
         }
     }
 }
