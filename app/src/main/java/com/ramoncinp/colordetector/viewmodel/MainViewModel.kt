@@ -27,6 +27,13 @@ class MainViewModel(
         permission: String,
         isGranted: Boolean
     ) {
+        if (isGranted) {
+            _state.update {
+                it.copy(
+                    permissionGranted = true
+                )
+            }
+        }
         if (!isGranted && !visiblePermissionDialogQueue.contains(permission)) {
             visiblePermissionDialogQueue.add(0, permission)
         }
