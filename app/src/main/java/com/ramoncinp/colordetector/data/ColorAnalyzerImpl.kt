@@ -192,7 +192,7 @@ class ColorAnalyzerImpl : ColorAnalyzer {
             0xFFFF00 to "Amarillo",
             0xFF00FF to "Magenta",
             0x00FFFF to "Cian",
-            0x800080 to "Purpura",
+            0x800080 to "Morado",
         )
     }
 }
