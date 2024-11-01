@@ -30,6 +30,11 @@ class ColorAnalyzerImpl : ColorAnalyzer {
         return sqrt(((r1 - r2) * (r1 - r2) + (g1 - g2) * (g1 - g2) + (b1 - b2) * (b1 - b2)).toDouble())
     }
 
+    /**
+     * Color obtained from the 2014 Material Design color palettes
+     * https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors
+     *
+     */
     companion object {
         private val materialTable = mapOf(
             0xFF0000 to "Rojo",
